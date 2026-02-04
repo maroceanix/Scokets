@@ -22,7 +22,7 @@ public class Receptor {
 			byte[] envio= mensaje.getBytes();
 			DatagramPacket send= new DatagramPacket(envio, envio.length, receive.getAddress(), receive.getPort());
 			socket.send(send);
-			socket.setSoTimeout(4000);
+			socket.setSoTimeout(10000);
 		}
 		
 		
