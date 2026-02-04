@@ -10,28 +10,35 @@ import java.net.Socket;
 
 public class Servidor {
 
-	public static void main(String[] args) {
-		int numPuerto=6000;
-		try {
-			ServerSocket servidor= new ServerSocket(numPuerto);
-			Socket cliente=null;
-			cliente=servidor.accept();
-			
-			
-			DataInputStream flujoEntrada=new DataInputStream(cliente.getInputStream());
-
-			int respuesta=flujoEntrada.readInt();
-			
-			DataOutputStream flujoSalida= new DataOutputStream(cliente.getOutputStream());
-			
-			flujoSalida.writeInt(respuesta*respuesta);
-			
-			
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public static void main(String[] args) throws IOException {
+		int puerto=6000;
+		ServerSocket servidor= new ServerSocket(puerto);
+		System.out.println("Iniciando servidor ..");
+		
+		Socket cliente1=servidor.accept();
+		DataInputStream flujoEntrada= new DataInputStream(cliente1.getInputStream());
+		
+		int respuesta=flujoEntrada.readInt();
+		
+		DataOutputStream flujoSalida= new DataOutputStream(cliente1.getOutputStream());
+		
+		flujoSalida.writeInt(respuesta*respuesta);
+		
+		cliente1.close();
+		
+		Socket cliente2=servidor.accept();
+		
+		flujoEntrada= new DataInputStream(cliente2.getInputStream());
+		
+		respuesta=flujoEntrada.readInt();
+		flujoSalida= new DataOutputStream(cliente2.getOutputStream());
+		
+		flujoSalida.writeInt(respuesta*respuesta);
+		
+		cliente2.close();
+		
+		
+		
 	}
 
 }
